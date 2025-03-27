@@ -33,7 +33,7 @@ if __name__ == '__main__':
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
     criterion = nn.CrossEntropyLoss()
 
-    n_epochs = 100
+    n_epochs = 10
     train_losses = []
     for epoch in range(n_epochs):
         print(">> Epoch: ", epoch + 1)

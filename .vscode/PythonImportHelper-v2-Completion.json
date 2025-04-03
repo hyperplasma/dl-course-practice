@@ -43,5 +43,67 @@
         "description": "matplotlib.pyplot",
         "detail": "matplotlib.pyplot",
         "documentation": {}
+    },
+    {
+        "label": "Dataset",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "glob",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "glob",
+        "description": "glob",
+        "detail": "glob",
+        "documentation": {}
+    },
+    {
+        "label": "os.path",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os.path",
+        "description": "os.path",
+        "detail": "os.path",
+        "documentation": {}
+    },
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "albumentations",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "albumentations",
+        "description": "albumentations",
+        "detail": "albumentations",
+        "documentation": {}
+    },
+    {
+        "label": "SkinDataset",
+        "kind": 6,
+        "importPath": "dl_2_isic_seg.skin_dataset",
+        "description": "dl_2_isic_seg.skin_dataset",
+        "peekOfCode": "class SkinDataset(Dataset):\n    def __init__(self, data_root, subset=\"train\", transform=None):\n        self.transform = transform\n        im_root = \"\"\n        mask_root = \"\"\n        if subset == \"train\":\n            im_root = osp.join(data_root, \"ISBI2016_ISIC_Part1_Training_Data\")\n            mask_root = osp.join(data_root, \"ISBI2016_ISIC_Part1_Training_GroundTruth\")\n        else:\n            im_root = osp.join(data_root, \"ISBI2016_ISIC_Part1_Test_Data\")",
+        "detail": "dl_2_isic_seg.skin_dataset",
+        "documentation": {}
     }
 ]

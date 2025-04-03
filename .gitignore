@@ -3,3 +3,6 @@
 
 .DS_Store
 .env
+
+/dl_1_flower102_cnn/datasets
+/dl_2_isbi_seg/datasets

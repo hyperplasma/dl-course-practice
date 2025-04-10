@@ -2,9 +2,9 @@
 .idea
 __pycache__
 .log
+*.pyc
 
 .DS_Store
 .env
 
-/dl_1_flower102_cnn/datasets
-/dl_2_isic_seg/datasets
+datasets

@@ -1,10 +1,10 @@
 .vscode
 .idea
+__pycache__
+.log
 
 .DS_Store
 .env
-
-
 
 /dl_1_flower102_cnn/datasets
 /dl_2_isic_seg/datasets

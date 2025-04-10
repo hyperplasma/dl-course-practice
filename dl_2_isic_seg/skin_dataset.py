@@ -1,9 +1,10 @@
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 import glob
 import os.path as osp
 import cv2
 import os
 import albumentations as A
+import matplotlib.pyplot as plt
 
 
 class SkinDataset(Dataset):
@@ -52,7 +53,24 @@ if __name__ == "__main__":
     data_root = os.environ.get("ISIC_DATASET_ROOT")
     print("Data root: ", data_root)
     
-    dataset = SkinDataset(data_root=data_root, subset="train")
-    im, mask = dataset[10]
-    print(im.shape, mask.shape)
-
+    transform = A.Compose([A.HorizontalFlip(p=0.5),
+                          A.RandomBrightnessContrast(p=0.2),
+                          A.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.05, rotate_limit=180, p=0.5),
+                          A.GridDistortion(p=0.1),
+                          A.OpticalDistortion(p=0.1),
+                          A.Resize(height=128, width=128)])
+    
+    dataset = SkinDataset(data_root=data_root, subset="train", transform=transform)
+    
+    dataloader = DataLoader(dataset, batch_size=2, shuffle=True, num_workers=2)
+    
+    for im, mask in dataloader:
+        print(im.shape, mask.shape)
+        im = im[0, ...].numpy().transpose((1, 2, 0))
+        mask = mask[0, ...].numpy()
+        plt.subplot(1, 2, 1)
+        plt.imshow(im)
+        plt.subplot(1, 2, 2)
+        plt.imshow(mask, cmap="gray")
+        plt.show()
+    

@@ -53,6 +53,14 @@
         "documentation": {}
     },
     {
+        "label": "DataLoader",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
         "label": "glob",
         "kind": 6,
         "isExtraImport": true,

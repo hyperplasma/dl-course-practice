@@ -5,6 +5,7 @@ import os
 from models import get_fcn_resnet50
 import torch
 import numpy as np
+import pandas as pd
 from util import draw_progress_bar
 from dice_loss import MultiClassDiceCoeff, MultiClassDiceLoss
 
@@ -35,6 +36,11 @@ if __name__ == '__main__':
     num_epochs = 100
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=100, gamma=0.95)
+    
+    save_path = "checkpoints"
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+    # TODO 保存checkpoint
     
     ce_loss_func = torch.nn.CrossEntropyLoss()
     

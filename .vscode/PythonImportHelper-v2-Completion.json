@@ -131,14 +131,6 @@
         "documentation": {}
     },
     {
-        "label": "get_fcn_resnet50",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
         "label": "pandas",
         "kind": 6,
         "isExtraImport": true,
@@ -149,6 +141,14 @@
     },
     {
         "label": "draw_progress_bar",
+        "importPath": "util",
+        "description": "util",
+        "isExtraImport": true,
+        "detail": "util",
+        "documentation": {}
+    },
+    {
+        "label": "plot_preds",
         "importPath": "util",
         "description": "util",
         "isExtraImport": true,
@@ -169,6 +169,31 @@
         "description": "dice_loss",
         "isExtraImport": true,
         "detail": "dice_loss",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "get_fcn_resnet50",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
         "documentation": {}
     },
     {
@@ -221,7 +246,16 @@
         "kind": 2,
         "importPath": "dl_2_isic_seg.util",
         "description": "dl_2_isic_seg.util",
-        "peekOfCode": "def draw_progress_bar(cur, total, bar_len=50):\n    \"\"\"\n        Print progress bar during training\n    \"\"\"\n    cur_len = int(cur / total * bar_len)\n    sys.stdout.write('\\r')\n    sys.stdout.write(\"[{:<{}}] {}/{}\".format(\"=\" * cur_len, bar_len, cur, total))\n    sys.stdout.flush()",
+        "peekOfCode": "def draw_progress_bar(cur, total, bar_len=50):\n    \"\"\"\n        Print progress bar during training\n    \"\"\"\n    cur_len = int(cur / total * bar_len)\n    sys.stdout.write('\\r')\n    sys.stdout.write(\"[{:<{}}] {}/{}\".format(\"=\" * cur_len, bar_len, cur, total))\n    sys.stdout.flush()\ndef plot_preds(ims, preds, masks):\n    '''",
+        "detail": "dl_2_isic_seg.util",
+        "documentation": {}
+    },
+    {
+        "label": "plot_preds",
+        "kind": 2,
+        "importPath": "dl_2_isic_seg.util",
+        "description": "dl_2_isic_seg.util",
+        "peekOfCode": "def plot_preds(ims, preds, masks):\n    '''\n    用于可视化训练中间结果\n    '''\n    preds = torch.softmax(preds, dim=1)\n    ims = ims.detach().cpu().numpy()  \n    preds = preds.detach().cpu().numpy()  \n    masks = masks.detach().cpu().numpy()  \n    plt.subplot(1, 3, 1)   \n    plt.imshow(np.uint8(ims[0, ...]).transpose((1,2,0)))  ",
         "detail": "dl_2_isic_seg.util",
         "documentation": {}
     }

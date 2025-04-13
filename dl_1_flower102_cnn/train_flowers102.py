@@ -12,10 +12,10 @@ if __name__ == '__main__':
         tv.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
 
-    train_dataset = tv.datasets.Flowers102(root='./datasets', split="train", download=False, transform=transform)
+    train_dataset = tv.datasets.Flowers102(root='./datasets', split="train", download=True, transform=transform)
     print("Training samples: ", len(train_dataset))
 
-    val_dataset = tv.datasets.Flowers102(root='./datasets', split="val", download=False, transform=transform)
+    val_dataset = tv.datasets.Flowers102(root='./datasets', split="val", download=True, transform=transform)
     print("Validation samples: ", len(val_dataset))
 
     train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
     criterion = nn.CrossEntropyLoss()
 
-    n_epochs = 10
+    n_epochs = 100
     train_losses = []
     for epoch in range(n_epochs):
         print(">> Epoch: ", epoch + 1)

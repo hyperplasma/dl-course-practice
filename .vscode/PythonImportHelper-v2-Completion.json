@@ -260,7 +260,7 @@
         "kind": 2,
         "importPath": "dl_2_isic_seg.models",
         "description": "dl_2_isic_seg.models",
-        "peekOfCode": "def get_fcn_resnet50(num_classes=2, pretrained=False):\n    model = seg.fcn_resnet50(pretrained=pretrained)\n    # 修改模型输出层\n    model.classifier[-1] = torch.nn.Conv2d(model.classifier[-1].in_channels, num_classes, kernel_size=(1, 1))\n    model.aux_classifier = None\n    return model\nif __name__ == '__main__':\n    model = get_fcn_resnet50(num_classes=10)\n    model.eval()\n    # 输入(3, 224, 224)，输出(10, 224, 224)",
+        "peekOfCode": "def get_fcn_resnet50(num_classes=2, pretrained=False):\n    model = seg.fcn_resnet50(weights=None if not pretrained else 'segmentation')\n    # 修改模型输出层\n    model.classifier[-1] = torch.nn.Conv2d(model.classifier[-1].in_channels, num_classes, kernel_size=(1, 1))\n    model.aux_classifier = None\n    return model\nif __name__ == '__main__':\n    model = get_fcn_resnet50(num_classes=10)\n    model.eval()\n    # 输入(3, 224, 224)，输出(10, 224, 224)",
         "detail": "dl_2_isic_seg.models",
         "documentation": {}
     },

@@ -14,7 +14,7 @@ from models import get_fcn_resnet50
 
 if __name__ == '__main__':
     # 实例化dataset和dataloader
-    data_root = os.environ.get("ISIC_DATASET_ROOT")
+    data_root = os.environ["ISIC_DATASET_ROOT"]
     transform = A.Compose([
         A.HorizontalFlip(p=0.5),
         A.RandomBrightnessContrast(p=0.2),
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=100, gamma=0.95)
 
     # 开辟保存目录，存储模型参数和训练参数
-    save_path = './checkpoints/resnet50'
+    save_path = 'checkpoints/resnet50'
     os.makedirs(save_path, exist_ok=True)
 
     df_summary = pd.DataFrame(columns=['time', 'step', 'train dice loss', 'eval dsc'])
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     # 开始迭代训练
     model.train()
-    num_epochs = 100
+    num_epochs = 10
     max_dsc = 0.0
     step_per_epoch = len(train_dataset) // batch_size
     for k in range(num_epochs):
@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
         train_dice_loss = np.mean(ce_losses) + np.mean(dc_losses)
         eval_dsc = eval_dsc / len(val_dataset)
-        print("\nTrain Dice Loss:", train_dice_loss, ", Eval Dice:", eval_dsc, " Train time:", t2 - t1)
+        print("\nTrain Dice Loss:", train_dice_loss, " Eval Dice:", eval_dsc, " Train time:", t2 - t1)
 
         # 保存最佳模型参数
         checkpoint_file = os.path.join(save_path, "best_weights.pth")

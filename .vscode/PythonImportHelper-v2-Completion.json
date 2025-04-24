@@ -94,6 +94,14 @@
         "documentation": {}
     },
     {
+        "label": "DataLoader",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
         "label": "glob",
         "kind": 6,
         "isExtraImport": true,
@@ -153,6 +161,22 @@
         "importPath": "pandas",
         "description": "pandas",
         "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "draw_progress_bar",
+        "importPath": "util",
+        "description": "util",
+        "isExtraImport": true,
+        "detail": "util",
+        "documentation": {}
+    },
+    {
+        "label": "plot_preds",
+        "importPath": "util",
+        "description": "util",
+        "isExtraImport": true,
+        "detail": "util",
         "documentation": {}
     },
     {
@@ -307,6 +331,33 @@
         "description": "dl_3_chrm.chrm_dataset",
         "peekOfCode": "os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'\nclass ChrmDataset(Dataset):\n    def __init__(self, data_roots, transforms=None):\n        '''\n        data_roots: 数据集路径字典 e.g.,{'labeled path':1, 'unlabeled path':0}，其中0和1表示无标签和有标签\n        '''\n        self.transforms = transforms\n        self.samples = []\n        for data_root in data_roots:\n            has_label = data_roots[data_root]",
         "detail": "dl_3_chrm.chrm_dataset",
+        "documentation": {}
+    },
+    {
+        "label": "EMA",
+        "kind": 6,
+        "importPath": "dl_3_chrm.train",
+        "description": "dl_3_chrm.train",
+        "peekOfCode": "class EMA():\n    def __init__(self, model, decay=0.98):\n        self.model = model\n        self.decay = decay\n        self.shadow = {}\n        self.backup = {}\n        self.register()\n    def register(self):\n        \"\"\"\n        初始化时调用，将student的参数初始化至shadow",
+        "detail": "dl_3_chrm.train",
+        "documentation": {}
+    },
+    {
+        "label": "draw_progress_bar",
+        "kind": 2,
+        "importPath": "dl_3_chrm.util",
+        "description": "dl_3_chrm.util",
+        "peekOfCode": "def draw_progress_bar(cur, total, bar_len=50):\n    \"\"\"\n        Print progress bar during training\n    \"\"\"\n    cur_len = int(cur / total * bar_len)\n    sys.stdout.write('\\r')\n    sys.stdout.write(\"[{:<{}}] {}/{}\".format(\"=\" * cur_len, bar_len, cur, total))\n    sys.stdout.flush()\ndef plot_preds(ims, preds, masks):\n    '''",
+        "detail": "dl_3_chrm.util",
+        "documentation": {}
+    },
+    {
+        "label": "plot_preds",
+        "kind": 2,
+        "importPath": "dl_3_chrm.util",
+        "description": "dl_3_chrm.util",
+        "peekOfCode": "def plot_preds(ims, preds, masks):\n    '''\n    用于可视化训练中间结果\n    '''\n    preds = torch.softmax(preds, dim=1)\n    ims = ims.detach().cpu().numpy()  \n    preds = preds.detach().cpu().numpy()  \n    masks = masks.detach().cpu().numpy()  \n    plt.subplot(1, 3, 1)   \n    plt.imshow(np.uint8(ims[0, ...]).transpose((1,2,0)))  ",
+        "detail": "dl_3_chrm.util",
         "documentation": {}
     }
 ]

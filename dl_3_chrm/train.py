@@ -148,3 +148,14 @@ if __name__ == '__main__':
         if acc > max_acc:
             max_acc = acc
             torch.save(student.state_dict(), 'student.pth')
+            
+    print("Max accuracy: {:.4f}".format(max_acc))
+    
+    # 数据可视化并保存为Figure_1.png
+    plt.plot(mse_losses, label='MSE Loss')
+    plt.plot(ce_losses, label='CE Loss')
+    plt.xlabel('Step')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.savefig('Figure_1.png')
+    plt.show()

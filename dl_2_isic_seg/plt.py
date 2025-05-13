@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 # Load the CSV file
 df_summary = pd.read_csv('checkpoints/resnet50/training_summary.csv')
+# df_summary = pd.read_csv('checkpoints/deeplabv3/training_summary.csv')
 
 # Extract relevant columns
 steps = df_summary['step']

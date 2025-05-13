@@ -55,7 +55,7 @@ class EMA():
                 self.shadow[name] = new_average.clone()
         
 
-if __name__ == '__main__':
+def train(semi_supervised=True, savefig_name="Figure.png", **kwargs):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     transform = transforms.Compose([
@@ -67,14 +67,20 @@ if __name__ == '__main__':
       
     ])
     
-    train_dataset = ChrmDataset(data_roots={'/Users/hyperplasma/workspace/codes/Python/dl-test/dl_3_chrm/datasets/chrm_cls/with labels/train':1, 
-                                      '/Users/hyperplasma/workspace/codes/Python/dl-test/dl_3_chrm/datasets/chrm_cls/without labels':0},
-                          transforms=transform)
+    # 根据模式选择数据集
+    if semi_supervised:
+        train_dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/train':1, 
+                                        'datasets/chrm_cls/without labels':0},
+                            transforms=transform)
+    else:
+        train_dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/train':1},
+                            transforms=transform)
+
 
     batch_size = 32
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
     
-    test_dataset = ChrmDataset(data_roots={'/Users/hyperplasma/workspace/codes/Python/dl-test/dl_3_chrm/datasets/chrm_cls/with labels/test':1},
+    test_dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/test':1},
                           transforms=transform)
 
     test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=2)
@@ -83,9 +89,10 @@ if __name__ == '__main__':
     num_classes = 24
     student.fc = torch.nn.Linear(student.fc.in_features, num_classes)
     
-    teacher = EMA(student, decay=0.98)
+    if semi_supervised:
+        teacher = EMA(student, decay=0.98)
     
-    n_epoch = 100
+    n_epoch = 10
     ce_func = torch.nn.CrossEntropyLoss()
     mse_func = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(student.parameters(), lr=0.0001)
@@ -99,43 +106,66 @@ if __name__ == '__main__':
         for step, (ims1, ims2, labels) in enumerate(train_dataloader):
             ims1, ims2, labels = ims1.to(device), ims2.to(device), labels.to(device)
             logit_s = student(ims1)
-            teacher.apply_shadow()
-            logit_t = student(ims2)
-            teacher.restore()
             
-            mse_loss = mse_func(torch.softmax(logit_s, dim=1), torch.softmax(logit_t, dim=1))
-            mse_losses.append(mse_loss.item())
-            
-            ce_loss = 0
-            if (labels != -1).any():
-                keep_labels = torch.where(labels != -1)
-                ce_loss = ce_func(logit_s[keep_labels], labels[keep_labels])
-                ce_losses.append(ce_loss.item())
+            if semi_supervised:
+                # 半监督模式：使用教师模型和一致性正则化
+                teacher.apply_shadow()
+                logit_t = student(ims2)
+                teacher.restore()
+                
+                # 计算一致性损失
+                mse_loss = mse_func(torch.softmax(logit_s, dim=1), torch.softmax(logit_t, dim=1))
+                mse_losses.append(mse_loss.item())
+                
+                # 计算有标签数据的交叉熵损失
+                ce_loss = 0
+                if (labels != -1).any():
+                    keep_labels = torch.where(labels != -1)
+                    ce_loss = ce_func(logit_s[keep_labels], labels[keep_labels])
+                    ce_losses.append(ce_loss.item())
+                else:
+                    ce_losses.append(0.0)
+                
+                # 总损失
+                total_loss = mse_loss + ce_loss * 2.0
             else:
-                ce_loss.append(0.0)
+                # 全监督模式：只使用交叉熵损失
+                ce_loss = ce_func(logit_s, labels)
+                ce_losses.append(ce_loss.item())
+                total_loss = ce_loss
             
-            total_loss = mse_loss + ce_loss * 2.0
-            
+            # 反向传播和优化
             optimizer.zero_grad()
             total_loss.backward()
             optimizer.step()
-            teacher.update()
+            
+            # 只在半监督模式下更新教师模型
+            if semi_supervised:
+                teacher.update()
+                
             draw_progress_bar(step, step_per_epoch)
             
         # 执行在线验证
-        print("\n Online validation...")
+        print("\nOnline validation...")
         num_correct = 0
         num_total = 0
         student.eval()
         for xs_s, xs_t, labels in test_dataloader:
             xs_s, xs_t, labels = xs_s.to(device), xs_t.to(device), labels.to(device).long()
             with torch.no_grad():
-                teacher.apply_shadow()
-                logit_t = student(xs_t)
-                teacher.restore()
-                
-                prob_t = torch.softmax(logit_t, dim=-1)
-                labels_t = torch.argmax(prob_t, dim=-1)
+                if semi_supervised:
+                    # 半监督模式：使用教师模型进行预测
+                    teacher.apply_shadow()
+                    logit_t = student(xs_t)
+                    teacher.restore()
+                    
+                    prob_t = torch.softmax(logit_t, dim=-1)
+                    labels_t = torch.argmax(prob_t, dim=-1)
+                else:
+                    # 全监督模式：直接使用学生模型进行预测
+                    logit_s = student(xs_s)
+                    prob_s = torch.softmax(logit_s, dim=-1)
+                    labels_t = torch.argmax(prob_s, dim=-1)
                 
                 num_correct += (labels_t == labels).sum().item()
                 num_total += labels.shape[0]
@@ -147,15 +177,21 @@ if __name__ == '__main__':
         
         if acc > max_acc:
             max_acc = acc
-            torch.save(student.state_dict(), 'student.pth')
+            torch.save(student.state_dict(), 'checkpoints/chrm/student.pth')
             
     print("Max accuracy: {:.4f}".format(max_acc))
     
-    # 数据可视化并保存为Figure_1.png
-    plt.plot(mse_losses, label='MSE Loss')
+    # 数据可视化并保存
+    plt.figure(figsize=(10, 6))
     plt.plot(ce_losses, label='CE Loss')
+    if semi_supervised:
+        plt.plot(mse_losses, label='MSE Loss')
     plt.xlabel('Step')
     plt.ylabel('Loss')
     plt.legend()
-    plt.savefig('Figure_1.png')
+    plt.savefig(savefig_name)
     plt.show()
+
+    
+if __name__ == '__main__':
+    train(semi_supervised=True, savefig_name="Figure_semi.png")

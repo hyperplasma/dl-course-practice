@@ -4,7 +4,7 @@ import torch.nn as nn
 import torchvision as tv
 import matplotlib.pyplot as plt
 
-if __name__ == '__main__':
+def train(dataset_dir="datasets"):
     batch_size = 4
     transform = tv.transforms.Compose([
         tv.transforms.Resize((64, 64)),
@@ -12,10 +12,10 @@ if __name__ == '__main__':
         tv.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
 
-    train_dataset = tv.datasets.Flowers102(root='./datasets', split="train", download=True, transform=transform)
+    train_dataset = tv.datasets.Flowers102(root=dataset_dir, split="train", download=False, transform=transform)
     print("Training samples: ", len(train_dataset))
 
-    val_dataset = tv.datasets.Flowers102(root='./datasets', split="val", download=True, transform=transform)
+    val_dataset = tv.datasets.Flowers102(root=dataset_dir, split="val", download=False, transform=transform)
     print("Validation samples: ", len(val_dataset))
 
     train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
@@ -69,4 +69,6 @@ if __name__ == '__main__':
     plt.title('Training Loss Curve')
     plt.legend()
     plt.show()
-    
+
+if __name__ == '__main__':
+    train()

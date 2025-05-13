@@ -12,9 +12,8 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from models import get_fcn_resnet50, get_deeplabv3_resnet101
 
-if __name__ == '__main__':
+def train(model="fcn_resnet50", data_root="datasets/ISIB2016_ISIC", csv_filename="training_summary.csv", **kwargs):
     # 实例化dataset和dataloader
-    data_root = os.environ["ISIC_DATASET_ROOT"]
     transform = A.Compose([
         A.HorizontalFlip(p=0.5),
         A.RandomBrightnessContrast(p=0.2),
@@ -33,16 +32,20 @@ if __name__ == '__main__':
 
     # 实例化模型
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    # model = get_fcn_resnet50(num_classes=2).to(device)    # 使用fcn_resnet50
-    model = get_deeplabv3_resnet101(num_classes=2).to(device)    # 使用deeplabv3_resnet101
+    if model == "deeplabv3_resnet101":
+        model = get_deeplabv3_resnet101(num_classes=2).to(device)
+    else:
+        model = get_fcn_resnet50(num_classes=2).to(device)
 
     # 定义超参数
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=100, gamma=0.95)
 
     # 开辟保存目录，存储模型参数和训练参数
-    # save_path = 'checkpoints/resnet50'
-    save_path = 'checkpoints/deeplabv3'
+    if model == "deeplabv3_resnet101":
+        save_path = 'checkpoints/deeplabv3'
+    else:
+        save_path = 'checkpoints/resnet50'
     
     os.makedirs(save_path, exist_ok=True)
 
@@ -124,6 +127,8 @@ if __name__ == '__main__':
 
         list_info = [current_time, step, str_train_loss, str_eval_dsc]
         df_summary = pd.DataFrame([list_info])
-        df_summary.to_csv(os.path.join(save_path, "training_summary.csv"), mode='a', header=False, index=False)
+        df_summary.to_csv(os.path.join(save_path, csv_filename), mode='a', header=False, index=False)
         
-        
+    
+if __name__ == '__main__':
+    train("deeplabv3_resnet101")

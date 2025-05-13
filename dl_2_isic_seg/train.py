@@ -10,7 +10,7 @@ from dice_loss import MultiClassDiceCoeff, MultiClassDiceLoss
 import time
 from datetime import datetime
 import matplotlib.pyplot as plt
-from models import get_fcn_resnet50
+from models import get_fcn_resnet50, get_deep_labv3_resnet50
 
 if __name__ == '__main__':
     # 实例化dataset和dataloader
@@ -33,7 +33,8 @@ if __name__ == '__main__':
 
     # 实例化模型
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = get_fcn_resnet50(num_classes=2).to(device)
+    model = get_fcn_resnet50(num_classes=2).to(device)    # 使用fcn_resnet50
+    # model = get_deep_labv3_resnet50(num_classes=2).to(device)    # 使用deeplabv3_resnet50
 
     # 定义超参数
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
@@ -122,4 +123,5 @@ if __name__ == '__main__':
         list_info = [current_time, step, str_train_loss, str_eval_dsc]
         df_summary = pd.DataFrame([list_info])
         df_summary.to_csv(os.path.join(save_path, "training_summary.csv"), mode='a', header=False, index=False)
-    
+        
+        

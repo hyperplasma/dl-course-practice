@@ -310,7 +310,7 @@
         "kind": 5,
         "importPath": "dl_2_isic_seg.plt",
         "description": "dl_2_isic_seg.plt",
-        "peekOfCode": "df_summary = pd.read_csv('checkpoints/resnet50/training_summary.csv')\n# df_summary = pd.read_csv('checkpoints/deeplabv3/training_summary.csv')\n# Extract relevant columns\nsteps = df_summary['step']\ntrain_dice_losses = df_summary['train dice loss']\neval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))",
+        "peekOfCode": "df_summary = pd.read_csv('checkpoints/deeplabv3/training_summary.csv')\n# Extract relevant columns\nsteps = df_summary['step']\ntrain_dice_losses = df_summary['train dice loss']\neval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss",
         "detail": "dl_2_isic_seg.plt",
         "documentation": {}
     },

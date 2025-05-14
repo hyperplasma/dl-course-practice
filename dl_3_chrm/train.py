@@ -92,7 +92,7 @@ def train(semi_supervised=True, savefig_name="Figure.png", **kwargs):
     if semi_supervised:
         teacher = EMA(student, decay=0.98)
     
-    n_epoch = 50
+    n_epoch = 20
     ce_func = torch.nn.CrossEntropyLoss()
     mse_func = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(student.parameters(), lr=0.0001)
@@ -195,5 +195,5 @@ def train(semi_supervised=True, savefig_name="Figure.png", **kwargs):
 
     
 if __name__ == '__main__':
-    train(semi_supervised=True, savefig_name="Figure_semi.png")
-    # train(semi_supervised=False, savefig_name="Figure_non_semi.png")
+    # train(semi_supervised=True, savefig_name="Figure_semi.png")
+    train(semi_supervised=False, savefig_name="Figure_non_semi.png")

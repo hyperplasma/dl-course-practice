@@ -62,8 +62,8 @@ if __name__ == '__main__':
       
     ])
 
-    dataset = ChrmDataset(data_roots={'/Users/hyperplasma/workspace/codes/Python/dl-test/dl_3_chrm/datasets/chrm_cls/with labels/train':1, 
-                                      '/Users/hyperplasma/workspace/codes/Python/dl-test/dl_3_chrm/datasets/chrm_cls/without labels':0},
+    dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/train':1, 
+                                      'datasets/chrm_cls/without labels':0},
                           transforms=transforms)
 
     dataloader = DataLoader(dataset, batch_size=2, shuffle=True, num_workers=2)

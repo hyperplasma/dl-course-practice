@@ -195,3 +195,4 @@ def train(semi_supervised=True, savefig_name="Figure.png", **kwargs):
     
 if __name__ == '__main__':
     train(semi_supervised=True, savefig_name="Figure_semi.png")
+    # train(semi_supervised=False, savefig_name="Figure_non_semi.png")

@@ -92,7 +92,7 @@ def train(semi_supervised=True, savefig_name="Figure.png", **kwargs):
     if semi_supervised:
         teacher = EMA(student, decay=0.98)
     
-    n_epoch = 10
+    n_epoch = 50
     ce_func = torch.nn.CrossEntropyLoss()
     mse_func = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(student.parameters(), lr=0.0001)
@@ -177,7 +177,8 @@ def train(semi_supervised=True, savefig_name="Figure.png", **kwargs):
         
         if acc > max_acc:
             max_acc = acc
-            torch.save(student.state_dict(), 'checkpoints/chrm/student.pth')
+            save_state_name = "checkpoints/chrm/student_semi.pth" if semi_supervised else "checkpoints/chrm/student_no_semi.pth"
+            torch.save(student.state_dict(), save_state_name)
             
     print("Max accuracy: {:.4f}".format(max_acc))
     

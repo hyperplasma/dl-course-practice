@@ -44,6 +44,14 @@
         "documentation": {}
     },
     {
+        "label": "transforms",
+        "importPath": "torchvision",
+        "description": "torchvision",
+        "isExtraImport": true,
+        "detail": "torchvision",
+        "documentation": {}
+    },
+    {
         "label": "matplotlib.pyplot",
         "kind": 6,
         "isExtraImport": true,
@@ -96,6 +104,14 @@
     },
     {
         "label": "Dataset",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "DataLoader",
         "importPath": "torch.utils.data",
         "description": "torch.utils.data",
         "isExtraImport": true,
@@ -275,6 +291,14 @@
         "description": "PIL",
         "isExtraImport": true,
         "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ChrmDataset",
+        "importPath": "chrm_dataset",
+        "description": "chrm_dataset",
+        "isExtraImport": true,
+        "detail": "chrm_dataset",
         "documentation": {}
     },
     {
@@ -478,7 +502,43 @@
         "kind": 6,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "class SimCLR(nn.Module):\n    def __init__(self, base_model=resnet18, z_dim=128):\n        super(SimCLR, self).__init__()\n        # 定义encoder\n        self.encoder = base_model(pretrained=True)\n        # 将fc层替换为projector\n        self.encoder.fc = nn.Linear(self.encoder.fc.in_features, z_dim)\n        # 定义可学习的温控系数\n        self.t = nn.Parameter(torch.ones([]) * np.log(1 / 0.07))\n    def forward(self, x):",
+        "peekOfCode": "class SimCLR(nn.Module):\n    def __init__(self, base_model=resnet18, z_dim=128):\n        super(SimCLR, self).__init__()\n        # 定义encoder\n        self.encoder = base_model(pretrained=False)\n        # 将fc层替换为projector\n        self.encoder.fc = nn.Linear(self.encoder.fc.in_features, z_dim)\n        # 定义可学习的温控系数\n        self.t = nn.Parameter(torch.ones([]) * np.log(1 / 0.07))\n    def forward(self, x):",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "transform",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "transform = transforms.Compose([\n    transforms.RandomRotation(90, fill=225),\n    transforms.Resize((64, 64)),\n    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),\n    transforms.RandomHorizontalFlip(p=0.5),\n    transforms.ToTensor(),\n])\ntrain_dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/train':1, \n                                      'datasets/chrm_cls/without labels':0},\n                           transforms=transforms)",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "train_dataset",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "train_dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/train':1, \n                                      'datasets/chrm_cls/without labels':0},\n                           transforms=transforms)\nbatch_size = 32\ntrain_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)\nprint('len(train_loader.dataset):', len(train_loader.dataset))",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "batch_size",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "batch_size = 32\ntrain_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)\nprint('len(train_loader.dataset):', len(train_loader.dataset))",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "train_loader",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)\nprint('len(train_loader.dataset):', len(train_loader.dataset))",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },

@@ -1,4 +1,6 @@
 .vscode
+.vscode/PythonImportHelper-v2-Completion.json
+
 .idea
 __pycache__
 .log

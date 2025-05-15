@@ -81,6 +81,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
 num_epochs = 10
 step_per_epoch = len(train_dataset) // batch_size
+train_losses = []
 for epoch in range(num_epochs):
     print(f"Epoch [{epoch + 1} / {num_epochs}]")
     model.train()
@@ -99,6 +100,7 @@ for epoch in range(num_epochs):
         labels = torch.arange(similar_matrix.shape[-1]).to(device)
         loss = criterion(similar_matrix, labels)
         # print('loss:', loss.item())
+        train_losses.append(loss.item())
         
         # 反向传播和优化
         optimizer.zero_grad()
@@ -107,3 +109,4 @@ for epoch in range(num_epochs):
         
         draw_progress_bar(step, step_per_epoch)
     
+    print(f"\nTrain Loss: {np.mean(train_losses):.4f}")

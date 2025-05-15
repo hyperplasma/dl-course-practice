@@ -524,7 +524,7 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)\n# print('len(train_loader.dataset):', len(train_loader.dataset))\ndevice = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nmodel = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):",
+        "peekOfCode": "train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)\n# print('len(train_loader.dataset):', len(train_loader.dataset))\ndevice = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nmodel = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\ntrain_losses = []",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -533,7 +533,7 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "device = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nmodel = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()",
+        "peekOfCode": "device = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nmodel = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\ntrain_losses = []\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -542,7 +542,7 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "model = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):",
+        "peekOfCode": "model = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\ntrain_losses = []\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -551,7 +551,7 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "criterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)",
+        "peekOfCode": "criterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\ntrain_losses = []\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -560,7 +560,7 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)\n        z1, t = model(img1)",
+        "peekOfCode": "optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\ntrain_losses = []\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -569,7 +569,7 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "num_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)\n        z1, t = model(img1)\n        z2, t = model(img2)",
+        "peekOfCode": "num_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\ntrain_losses = []\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)\n        z1, t = model(img1)",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -578,7 +578,16 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "step_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)\n        z1, t = model(img1)\n        z2, t = model(img2)\n        z1_norm = z1 / z1.norm(dim=1, keepdim=True)",
+        "peekOfCode": "step_per_epoch = len(train_dataset) // batch_size\ntrain_losses = []\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)\n        z1, t = model(img1)\n        z2, t = model(img2)",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "train_losses",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "train_losses = []\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)\n        z1, t = model(img1)\n        z2, t = model(img2)\n        z1_norm = z1 / z1.norm(dim=1, keepdim=True)",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },

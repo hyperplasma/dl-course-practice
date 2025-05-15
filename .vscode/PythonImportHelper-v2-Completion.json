@@ -70,15 +70,6 @@
         "documentation": {}
     },
     {
-        "label": "pandas",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "pandas",
-        "description": "pandas",
-        "detail": "pandas",
-        "documentation": {}
-    },
-    {
         "label": "Dataset",
         "importPath": "torch.utils.data",
         "description": "torch.utils.data",
@@ -188,35 +179,12 @@
         "documentation": {}
     },
     {
-        "label": "draw_progress_bar",
-        "importPath": "util",
-        "description": "util",
+        "label": "pandas",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "util",
-        "documentation": {}
-    },
-    {
-        "label": "plot_preds",
-        "importPath": "util",
-        "description": "util",
-        "isExtraImport": true,
-        "detail": "util",
-        "documentation": {}
-    },
-    {
-        "label": "draw_progress_bar",
-        "importPath": "util",
-        "description": "util",
-        "isExtraImport": true,
-        "detail": "util",
-        "documentation": {}
-    },
-    {
-        "label": "plot_preds",
-        "importPath": "util",
-        "description": "util",
-        "isExtraImport": true,
-        "detail": "util",
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
         "documentation": {}
     },
     {
@@ -363,57 +331,30 @@
         "documentation": {}
     },
     {
-        "label": "df_summary",
-        "kind": 5,
-        "importPath": "dl_2_isic_seg.plt",
-        "description": "dl_2_isic_seg.plt",
-        "peekOfCode": "df_summary = pd.read_csv('checkpoints/deeplabv3/training_summary.csv')\n# Extract relevant columns\nsteps = df_summary['step']\ntrain_dice_losses = df_summary['train dice loss']\neval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss",
-        "detail": "dl_2_isic_seg.plt",
-        "documentation": {}
-    },
-    {
-        "label": "steps",
-        "kind": 5,
-        "importPath": "dl_2_isic_seg.plt",
-        "description": "dl_2_isic_seg.plt",
-        "peekOfCode": "steps = df_summary['step']\ntrain_dice_losses = df_summary['train dice loss']\neval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss\nplt.subplot(1, 2, 1)\nplt.plot(steps, train_dice_losses, label='Train Dice Loss', color='blue')",
-        "detail": "dl_2_isic_seg.plt",
-        "documentation": {}
-    },
-    {
-        "label": "train_dice_losses",
-        "kind": 5,
-        "importPath": "dl_2_isic_seg.plt",
-        "description": "dl_2_isic_seg.plt",
-        "peekOfCode": "train_dice_losses = df_summary['train dice loss']\neval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss\nplt.subplot(1, 2, 1)\nplt.plot(steps, train_dice_losses, label='Train Dice Loss', color='blue')\nplt.xlabel('Step')",
-        "detail": "dl_2_isic_seg.plt",
-        "documentation": {}
-    },
-    {
-        "label": "eval_dscs",
-        "kind": 5,
-        "importPath": "dl_2_isic_seg.plt",
-        "description": "dl_2_isic_seg.plt",
-        "peekOfCode": "eval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss\nplt.subplot(1, 2, 1)\nplt.plot(steps, train_dice_losses, label='Train Dice Loss', color='blue')\nplt.xlabel('Step')\nplt.ylabel('Train Dice Loss')",
-        "detail": "dl_2_isic_seg.plt",
-        "documentation": {}
-    },
-    {
-        "label": "steps",
-        "kind": 5,
-        "importPath": "dl_2_isic_seg.plt",
-        "description": "dl_2_isic_seg.plt",
-        "peekOfCode": "steps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss\nplt.subplot(1, 2, 1)\nplt.plot(steps, train_dice_losses, label='Train Dice Loss', color='blue')\nplt.xlabel('Step')\nplt.ylabel('Train Dice Loss')\nplt.title('Train Dice Loss Over Steps')\nplt.legend()",
-        "detail": "dl_2_isic_seg.plt",
-        "documentation": {}
-    },
-    {
         "label": "SkinDataset",
         "kind": 6,
         "importPath": "dl_2_isic_seg.skin_dataset",
         "description": "dl_2_isic_seg.skin_dataset",
         "peekOfCode": "class SkinDataset(Dataset):\n    def __init__(self, data_root, subset=\"train\", transform=None):\n        self.transform = transform\n        im_root = \"\"\n        mask_root = \"\"\n        if subset == \"train\":\n            im_root = osp.join(data_root, \"ISBI2016_ISIC_Part1_Training_Data\")\n            mask_root = osp.join(data_root, \"ISBI2016_ISIC_Part1_Training_GroundTruth\")\n        else:\n            im_root = osp.join(data_root, \"ISBI2016_ISIC_Part1_Test_Data\")",
         "detail": "dl_2_isic_seg.skin_dataset",
+        "documentation": {}
+    },
+    {
+        "label": "draw_progress_bar",
+        "kind": 2,
+        "importPath": "dl_2_isic_seg.train",
+        "description": "dl_2_isic_seg.train",
+        "peekOfCode": "def draw_progress_bar(cur, total, bar_len=50):\n    \"\"\"\n        Print progress bar during training\n    \"\"\"\n    cur_len = int(cur / total * bar_len)\n    sys.stdout.write('\\r')\n    sys.stdout.write(\"[{:<{}}] {}/{}\".format(\"=\" * cur_len, bar_len, cur, total))\n    sys.stdout.flush()\ndef plot_preds(ims, preds, masks):\n    '''",
+        "detail": "dl_2_isic_seg.train",
+        "documentation": {}
+    },
+    {
+        "label": "plot_preds",
+        "kind": 2,
+        "importPath": "dl_2_isic_seg.train",
+        "description": "dl_2_isic_seg.train",
+        "peekOfCode": "def plot_preds(ims, preds, masks):\n    '''\n    用于可视化训练中间结果\n    '''\n    preds = torch.softmax(preds, dim=1)\n    ims = ims.detach().cpu().numpy()  \n    preds = preds.detach().cpu().numpy()  \n    masks = masks.detach().cpu().numpy()  \n    plt.subplot(1, 3, 1)   \n    plt.imshow(np.uint8(ims[0, ...]).transpose((1,2,0)))  ",
+        "detail": "dl_2_isic_seg.train",
         "documentation": {}
     },
     {
@@ -426,21 +367,48 @@
         "documentation": {}
     },
     {
-        "label": "draw_progress_bar",
-        "kind": 2,
-        "importPath": "dl_2_isic_seg.util",
-        "description": "dl_2_isic_seg.util",
-        "peekOfCode": "def draw_progress_bar(cur, total, bar_len=50):\n    \"\"\"\n        Print progress bar during training\n    \"\"\"\n    cur_len = int(cur / total * bar_len)\n    sys.stdout.write('\\r')\n    sys.stdout.write(\"[{:<{}}] {}/{}\".format(\"=\" * cur_len, bar_len, cur, total))\n    sys.stdout.flush()\ndef plot_preds(ims, preds, masks):\n    '''",
-        "detail": "dl_2_isic_seg.util",
+        "label": "df_summary",
+        "kind": 5,
+        "importPath": "dl_2_isic_seg.visualization",
+        "description": "dl_2_isic_seg.visualization",
+        "peekOfCode": "df_summary = pd.read_csv('checkpoints/deeplabv3/training_summary.csv')\n# Extract relevant columns\nsteps = df_summary['step']\ntrain_dice_losses = df_summary['train dice loss']\neval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss",
+        "detail": "dl_2_isic_seg.visualization",
         "documentation": {}
     },
     {
-        "label": "plot_preds",
-        "kind": 2,
-        "importPath": "dl_2_isic_seg.util",
-        "description": "dl_2_isic_seg.util",
-        "peekOfCode": "def plot_preds(ims, preds, masks):\n    '''\n    用于可视化训练中间结果\n    '''\n    preds = torch.softmax(preds, dim=1)\n    ims = ims.detach().cpu().numpy()  \n    preds = preds.detach().cpu().numpy()  \n    masks = masks.detach().cpu().numpy()  \n    plt.subplot(1, 3, 1)   \n    plt.imshow(np.uint8(ims[0, ...]).transpose((1,2,0)))  ",
-        "detail": "dl_2_isic_seg.util",
+        "label": "steps",
+        "kind": 5,
+        "importPath": "dl_2_isic_seg.visualization",
+        "description": "dl_2_isic_seg.visualization",
+        "peekOfCode": "steps = df_summary['step']\ntrain_dice_losses = df_summary['train dice loss']\neval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss\nplt.subplot(1, 2, 1)\nplt.plot(steps, train_dice_losses, label='Train Dice Loss', color='blue')",
+        "detail": "dl_2_isic_seg.visualization",
+        "documentation": {}
+    },
+    {
+        "label": "train_dice_losses",
+        "kind": 5,
+        "importPath": "dl_2_isic_seg.visualization",
+        "description": "dl_2_isic_seg.visualization",
+        "peekOfCode": "train_dice_losses = df_summary['train dice loss']\neval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss\nplt.subplot(1, 2, 1)\nplt.plot(steps, train_dice_losses, label='Train Dice Loss', color='blue')\nplt.xlabel('Step')",
+        "detail": "dl_2_isic_seg.visualization",
+        "documentation": {}
+    },
+    {
+        "label": "eval_dscs",
+        "kind": 5,
+        "importPath": "dl_2_isic_seg.visualization",
+        "description": "dl_2_isic_seg.visualization",
+        "peekOfCode": "eval_dscs = df_summary['eval dsc']\n# Convert step to integers for plotting\nsteps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss\nplt.subplot(1, 2, 1)\nplt.plot(steps, train_dice_losses, label='Train Dice Loss', color='blue')\nplt.xlabel('Step')\nplt.ylabel('Train Dice Loss')",
+        "detail": "dl_2_isic_seg.visualization",
+        "documentation": {}
+    },
+    {
+        "label": "steps",
+        "kind": 5,
+        "importPath": "dl_2_isic_seg.visualization",
+        "description": "dl_2_isic_seg.visualization",
+        "peekOfCode": "steps = steps.apply(lambda x: int(x.strip('Step[]')))\n# Plotting\nplt.figure(figsize=(10, 5))\n# Plot train dice loss\nplt.subplot(1, 2, 1)\nplt.plot(steps, train_dice_losses, label='Train Dice Loss', color='blue')\nplt.xlabel('Step')\nplt.ylabel('Train Dice Loss')\nplt.title('Train Dice Loss Over Steps')\nplt.legend()",
+        "detail": "dl_2_isic_seg.visualization",
         "documentation": {}
     },
     {
@@ -471,30 +439,30 @@
         "documentation": {}
     },
     {
+        "label": "draw_progress_bar",
+        "kind": 2,
+        "importPath": "dl_3_chrm.train",
+        "description": "dl_3_chrm.train",
+        "peekOfCode": "def draw_progress_bar(cur, total, bar_len=50):\n    \"\"\"\n        Print progress bar during training\n    \"\"\"\n    cur_len = int(cur / total * bar_len)\n    sys.stdout.write('\\r')\n    sys.stdout.write(\"[{:<{}}] {}/{}\".format(\"=\" * cur_len, bar_len, cur, total))\n    sys.stdout.flush()\ndef plot_preds(ims, preds, masks):\n    '''",
+        "detail": "dl_3_chrm.train",
+        "documentation": {}
+    },
+    {
+        "label": "plot_preds",
+        "kind": 2,
+        "importPath": "dl_3_chrm.train",
+        "description": "dl_3_chrm.train",
+        "peekOfCode": "def plot_preds(ims, preds, masks):\n    '''\n    用于可视化训练中间结果\n    '''\n    preds = torch.softmax(preds, dim=1)\n    ims = ims.detach().cpu().numpy()  \n    preds = preds.detach().cpu().numpy()  \n    masks = masks.detach().cpu().numpy()  \n    plt.subplot(1, 3, 1)   \n    plt.imshow(np.uint8(ims[0, ...]).transpose((1,2,0)))  ",
+        "detail": "dl_3_chrm.train",
+        "documentation": {}
+    },
+    {
         "label": "train",
         "kind": 2,
         "importPath": "dl_3_chrm.train",
         "description": "dl_3_chrm.train",
         "peekOfCode": "def train(semi_supervised=True, savefig_name=\"Figure.png\", **kwargs):\n    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\n    transform = transforms.Compose([\n        transforms.RandomRotation(90, fill=255),\n        transforms.Resize((224, 224)),  \n        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),\n        transforms.RandomHorizontalFlip(p=0.5), # 随机水平翻转\n        transforms.ToTensor()                  # 转换为张量\n    ])\n    # 根据模式选择数据集",
         "detail": "dl_3_chrm.train",
-        "documentation": {}
-    },
-    {
-        "label": "draw_progress_bar",
-        "kind": 2,
-        "importPath": "dl_3_chrm.util",
-        "description": "dl_3_chrm.util",
-        "peekOfCode": "def draw_progress_bar(cur, total, bar_len=50):\n    \"\"\"\n        Print progress bar during training\n    \"\"\"\n    cur_len = int(cur / total * bar_len)\n    sys.stdout.write('\\r')\n    sys.stdout.write(\"[{:<{}}] {}/{}\".format(\"=\" * cur_len, bar_len, cur, total))\n    sys.stdout.flush()\ndef plot_preds(ims, preds, masks):\n    '''",
-        "detail": "dl_3_chrm.util",
-        "documentation": {}
-    },
-    {
-        "label": "plot_preds",
-        "kind": 2,
-        "importPath": "dl_3_chrm.util",
-        "description": "dl_3_chrm.util",
-        "peekOfCode": "def plot_preds(ims, preds, masks):\n    '''\n    用于可视化训练中间结果\n    '''\n    preds = torch.softmax(preds, dim=1)\n    ims = ims.detach().cpu().numpy()  \n    preds = preds.detach().cpu().numpy()  \n    masks = masks.detach().cpu().numpy()  \n    plt.subplot(1, 3, 1)   \n    plt.imshow(np.uint8(ims[0, ...]).transpose((1,2,0)))  ",
-        "detail": "dl_3_chrm.util",
         "documentation": {}
     },
     {
@@ -507,11 +475,29 @@
         "documentation": {}
     },
     {
+        "label": "draw_progress_bar",
+        "kind": 2,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "def draw_progress_bar(cur, total, bar_len=50):\n    \"\"\"\n        Print progress bar during training\n    \"\"\"\n    cur_len = int(cur / total * bar_len)\n    sys.stdout.write('\\r')\n    sys.stdout.write(\"[{:<{}}] {}/{}\".format(\"=\" * cur_len, bar_len, cur, total))\n    sys.stdout.flush()\ndef plot_preds(ims, preds, masks):\n    '''",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "plot_preds",
+        "kind": 2,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "def plot_preds(ims, preds, masks):\n    '''\n    用于可视化训练中间结果\n    '''\n    preds = torch.softmax(preds, dim=1)\n    ims = ims.detach().cpu().numpy()  \n    preds = preds.detach().cpu().numpy()  \n    masks = masks.detach().cpu().numpy()  \n    plt.subplot(1, 3, 1)   \n    plt.imshow(np.uint8(ims[0, ...]).transpose((1,2,0)))  ",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
         "label": "transform",
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "transform = transforms.Compose([\n    transforms.RandomRotation(90, fill=225),\n    transforms.Resize((64, 64)),\n    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),\n    transforms.RandomHorizontalFlip(p=0.5),\n    transforms.ToTensor(),\n])\ntrain_dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/train':1, \n                                      'datasets/chrm_cls/without labels':0},\n                           transforms=transforms)",
+        "peekOfCode": "transform = transforms.Compose([\n    transforms.RandomRotation(90, fill=225),\n    transforms.Resize((64, 64)),\n    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),\n    transforms.RandomHorizontalFlip(p=0.5),\n    transforms.ToTensor(),\n])\ntrain_dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/train':1, \n                                      'datasets/chrm_cls/without labels':0},\n                           transforms=transform)",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -520,7 +506,7 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "train_dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/train':1, \n                                      'datasets/chrm_cls/without labels':0},\n                           transforms=transforms)\nbatch_size = 32\ntrain_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)\nprint('len(train_loader.dataset):', len(train_loader.dataset))",
+        "peekOfCode": "train_dataset = ChrmDataset(data_roots={'datasets/chrm_cls/with labels/train':1, \n                                      'datasets/chrm_cls/without labels':0},\n                           transforms=transform)\nbatch_size = 32\ntrain_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)\n# print('len(train_loader.dataset):', len(train_loader.dataset))\ndevice = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nmodel = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -529,7 +515,7 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "batch_size = 32\ntrain_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)\nprint('len(train_loader.dataset):', len(train_loader.dataset))",
+        "peekOfCode": "batch_size = 32\ntrain_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)\n# print('len(train_loader.dataset):', len(train_loader.dataset))\ndevice = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nmodel = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -538,7 +524,61 @@
         "kind": 5,
         "importPath": "dl_4_ssl_chrm.SimCLR_train",
         "description": "dl_4_ssl_chrm.SimCLR_train",
-        "peekOfCode": "train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)\nprint('len(train_loader.dataset):', len(train_loader.dataset))",
+        "peekOfCode": "train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)\n# print('len(train_loader.dataset):', len(train_loader.dataset))\ndevice = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nmodel = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "device",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "device = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nmodel = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "model = SimCLR(z_dim=256).to(device)\n# print(model)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "criterion",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "criterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "optimizer",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)\nnum_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)\n        z1, t = model(img1)",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "num_epochs",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "num_epochs = 10\nstep_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)\n        z1, t = model(img1)\n        z2, t = model(img2)",
+        "detail": "dl_4_ssl_chrm.SimCLR_train",
+        "documentation": {}
+    },
+    {
+        "label": "step_per_epoch",
+        "kind": 5,
+        "importPath": "dl_4_ssl_chrm.SimCLR_train",
+        "description": "dl_4_ssl_chrm.SimCLR_train",
+        "peekOfCode": "step_per_epoch = len(train_dataset) // batch_size\nfor epoch in range(num_epochs):\n    print(f\"Epoch [{epoch + 1} / {num_epochs}]\")\n    model.train()\n    for step, (img1, img2, _) in enumerate(train_loader):\n        img1, img2 = img1.to(device), img2.to(device)\n        # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)\n        z1, t = model(img1)\n        z2, t = model(img2)\n        z1_norm = z1 / z1.norm(dim=1, keepdim=True)",
         "detail": "dl_4_ssl_chrm.SimCLR_train",
         "documentation": {}
     },
@@ -558,6 +598,24 @@
         "description": "dl_4_ssl_chrm.chrm_dataset",
         "peekOfCode": "os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'\nclass ChrmDataset(Dataset):\n    def __init__(self, data_roots, transforms=None):\n        '''\n        data_roots: 数据集路径字典 e.g.,{'labeled path':1, 'unlabeled path':0}，其中0和1表示无标签和有标签\n        '''\n        self.transforms = transforms\n        self.samples = []\n        for data_root in data_roots:\n            has_label = data_roots[data_root]",
         "detail": "dl_4_ssl_chrm.chrm_dataset",
+        "documentation": {}
+    },
+    {
+        "label": "draw_progress_bar",
+        "kind": 2,
+        "importPath": "utils.progbar",
+        "description": "utils.progbar",
+        "peekOfCode": "def draw_progress_bar(cur, total, bar_len=50):\n    \"\"\"\n        Print progress bar during training\n    \"\"\"\n    cur_len = int(cur / total * bar_len)\n    sys.stdout.write('\\r')\n    sys.stdout.write(\"[{:<{}}] {}/{}\".format(\"=\" * cur_len, bar_len, cur, total))\n    sys.stdout.flush()\ndef plot_preds(ims, preds, masks):\n    '''",
+        "detail": "utils.progbar",
+        "documentation": {}
+    },
+    {
+        "label": "plot_preds",
+        "kind": 2,
+        "importPath": "utils.progbar",
+        "description": "utils.progbar",
+        "peekOfCode": "def plot_preds(ims, preds, masks):\n    '''\n    用于可视化训练中间结果\n    '''\n    preds = torch.softmax(preds, dim=1)\n    ims = ims.detach().cpu().numpy()  \n    preds = preds.detach().cpu().numpy()  \n    masks = masks.detach().cpu().numpy()  \n    plt.subplot(1, 3, 1)   \n    plt.imshow(np.uint8(ims[0, ...]).transpose((1,2,0)))  ",
+        "detail": "utils.progbar",
         "documentation": {}
     }
 ]

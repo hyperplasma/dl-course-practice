@@ -81,10 +81,10 @@ optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
 num_epochs = 10
 step_per_epoch = len(train_dataset) // batch_size
-train_losses = []
 for epoch in range(num_epochs):
     print(f"Epoch [{epoch + 1} / {num_epochs}]")
     model.train()
+    train_losses = []
     for step, (img1, img2, _) in enumerate(train_loader):
         img1, img2 = img1.to(device), img2.to(device)
         # print('img1.shape:', img1.shape, 'img2.shape:', img2.shape)

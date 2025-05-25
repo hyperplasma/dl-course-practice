@@ -12,3 +12,5 @@ __pycache__
 datasets
 checkpoints
 logs
+
+test.py

@@ -57,9 +57,61 @@ class SEBottleneck(nn.Module):
         
         return residual + out
 
+class SEResnet(nn.Module):
+    def __init__(self, block, layers=[3, 4, 6, 3], num_classes=1000):
+        super(SEResnet, self).__init__()
+        self.inplanes = 64
+        self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False)
+        self.bn1 = nn.BatchNorm2d(64)
+        self.relu = nn.ReLU(inplace=True)
+        
+        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        
+        self.layer1 = self.make_group(block, 64, 64, layers[0])
+        self.layer2 = self.make_group(block, 64, 128, layers[1], stride=2)
+        self.layer3 = self.make_group(block, 128, 256, layers[2], stride=2)
+        self.layer4 = self.make_group(block, 256, 512, layers[3], stride=2)
+        
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        self.fc = nn.Linear(512, num_classes)
+        
+    def forward(self, x):
+        x = self.relu(self.bn1(self.conv1(x)))
+        x = self.maxpool(x)
+        
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.layer4(x)
+        
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc(x)
+        
+        return x
+    
+    def make_group(self, block, in_channels, out_channels, blocks, stride=1, reduction=16):
+        downsample = None
+        if stride != 1 or in_channels != out_channels:
+            downsample = nn.Sequential(
+                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
+                nn.BatchNorm2d(out_channels)
+            )
+        
+        layers = []
+        layers.append(block(in_channels, out_channels, stride, downsample, reduction))
+        
+        for i in range(1, blocks):
+            layers.append(block(out_channels, out_channels, reduction=reduction))
+            
+        return nn.Sequential(*layers)
+
 if __name__ == "__main__":
-    x = torch.randn(2, 64, 112, 112)
-    se = SELayer(64)
+    x = torch.randn(2, 3, 112, 112)
+    downsample = nn.Sequential(
+        nn.Conv2d(64, 128, kernel_size=1, stride=2, bias=False),
+        nn.BatchNorm2d(128)
+    )
+    se = SEResnet(SEBottleneck, layers=[2, 3, 3, 3], num_classes=100)
     y = se(x)
     print(x.shape, y.shape)
-

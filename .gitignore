@@ -13,7 +13,15 @@ datasets
 checkpoints
 logs
 outputs
+build
+dist
+data
 
 test.py
 
 models
+
+*.zip
+*.tar.gz
+*.tar
+*.7z

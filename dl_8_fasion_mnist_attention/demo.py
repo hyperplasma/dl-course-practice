@@ -28,20 +28,14 @@ def main():
     G.eval()
 
     # 用户输入
-    print("请输入你想生成的数字标签（0-9），用逗号分隔，例如：1,3,7")
+    print("请输入你想生成的数字标签（如：123456）")
     label_str = input("标签: ")
-    label_list = [int(x) for x in label_str.strip().split(",") if x.strip().isdigit()]
+    label_list = [int(x) for x in label_str.strip() if x.isdigit()]
     if not label_list:
         print("输入无效，默认生成0-9")
         label_list = list(range(10))
     labels = torch.tensor(label_list, dtype=torch.long, device=device)
     n = len(labels)
-    if n > 10:
-        print("最多只能生成10张图片，已截断到前10个标签。")
-        labels = labels[:10]
-    elif n < 1:
-        print("没有有效标签，默认生成0-9")
-        labels = torch.arange(10, dtype=torch.long, device=device)
 
     # 生成图片
     with torch.no_grad():
